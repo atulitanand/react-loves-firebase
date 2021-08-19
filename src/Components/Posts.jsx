@@ -1,7 +1,6 @@
 import React from "react";
 import Post from "./Post";
 import AddPost from "./AddPost";
-import { firestore } from "../firebase";
 
 const Posts = ({ posts }) => {
   return (

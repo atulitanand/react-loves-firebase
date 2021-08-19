@@ -23,7 +23,7 @@ You don't even have to worry about even the state change beacause it triggers au
 
 Since we don't have any way to set up the stuff like `displayName`. We'll create the object first and then set the properties later. With this `user.updateProfile({ displayName });`.
 
-But there is a catch since UI renders only when someone logs in out out or someone creates a post we won't see those updated properties in effect untill we do it manually.
+But there is a catch since UI renders only when someone logs in out out or someone creates a post we won't see those updated properties in effect untill after UI is rendered once more and since we are just mutating one string react won't notice the state change.
 
 ## LogIn
 
