@@ -3,39 +3,21 @@ import { auth, createUserProfileDocument, firestore } from "../firebase";
 import { collectIdsAndDocs } from "../utilities";
 import Posts from "./Posts";
 import Authentication from "./Authentication";
+import { Route, Switch } from "react-router";
+import UserProfile from "./UserProfile";
+import { Link } from "react-router-dom";
+
 class Application extends Component {
-  state = {
-    posts: [],
-    user: null,
-  };
-
-  unsubscriFromFirestore = null;
-  unsubscriFromAuth = auth;
-
-  //Reading data in RealTime
-  componentDidMount() {
-    this.unsubscriFromFirestore = firestore
-      .collection("posts")
-      .onSnapshot((snapshot) => {
-        const posts = snapshot.docs.map(collectIdsAndDocs);
-        this.setState({ posts });
-      });
-    this.unsubscriFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      const user = await createUserProfileDocument(userAuth);
-      this.setState({ user });
-    });
-  }
-  componentWillUnmount() {
-    this.unsubscriFromFirestore();
-  }
 
   render() {
-    const { posts, user } = this.state;
     return (
       <main className="Application">
-        <h1>Think Piece</h1>
-        <Authentication user={user} />
-        <Posts posts={posts} />
+        <Link to='/'><h1>Think Piece</h1></Link>
+        <Authentication />
+        <Switch>
+          <Route exact path='/' component={Posts} />
+          <Route exact path='/profile' component={UserProfile} />
+        </Switch>
       </main>
     );
   }
